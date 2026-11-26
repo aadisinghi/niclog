@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10151c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>NicLog</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{color-scheme:dark;--bg:#10151c;--card:#1a222c;--border:#2b3541;--muted:#a3b0bf;--text:#edf2f8;--accent:#b9e3d1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}main{max-width:480px;margin:auto;padding:calc(18px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom))}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.brand{font-size:25px;font-weight:750;letter-spacing:-1px}.sub,.muted{color:var(--muted);font-size:13px}.date{font-size:13px;color:var(--muted)}h1,h2,p{margin:0}h2{font-size:16px;font-weight:650;margin-bottom:12px}button,select{font:inherit;color:inherit;touch-action:manipulation}button{border:0;border-radius:14px;cursor:pointer;min-height:48px;padding:12px 16px;font-weight:650}button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:default;transform:none}button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.card{border:1px solid var(--border);background:var(--card);border-radius:21px;padding:18px;margin:14px 0}.today{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.stat{padding:15px;background:#151c25;border-radius:15px}.number{font-size:39px;font-weight:700;letter-spacing:-2px;line-height:1.2;font-variant-numeric:tabular-nums}.primary{background:var(--accent);color:#13271f;width:100%;min-height:86px;font-size:22px;display:flex;align-items:center;justify-content:center;gap:10px}.plus{font-size:30px;font-weight:400}.secondary{background:#28333f;width:100%;margin-top:9px}.actions{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:12px}.link{background:transparent;color:var(--muted);padding:8px 0;min-height:44px;font-size:14px}.status{font-size:13px;color:var(--muted);min-height:19px;line-height:1.4}.status.error{color:#ffb5ad}.chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;margin-top:15px}.barcol{text-align:center;min-width:0}.bartrack{height:92px;display:flex;align-items:flex-end;justify-content:center;background:#151c25;border-radius:7px;overflow:hidden}.bar{width:100%;max-width:32px;background:#829baf;border-radius:5px 5px 0 0}.bar.current{background:var(--accent)}.barvalue{font-size:12px;font-variant-numeric:tabular-nums;margin-bottom:5px}.day{font-size:11px;color:var(--muted);margin-top:7px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.entry{padding:11px 0;border-top:1px solid var(--border)}.entry:first-child{border:0}.entry strong{font-size:14px}.entry small{display:block;color:var(--muted);font-size:12px;margin-top:3px}.remove{background:transparent;color:var(--muted);font-size:22px;min-width:44px;min-height:44px;padding:6px}.empty{font-size:14px;color:var(--muted);padding:12px 0}.tabs{display:flex;gap:5px;background:#151c25;padding:4px;border-radius:13px}.tabs button{flex:1;background:transparent;font-size:13px;padding:8px;min-height:38px;color:var(--muted)}.tabs button[aria-selected=true]{background:#303e4c;color:var(--text)}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-head h2{margin:0}select{background:#151c25;border:1px solid var(--border);border-radius:10px;padding:10px;max-width:100%}.settings p{line-height:1.5;margin:8px 0 12px}.settings button{font-size:14px}.nav{display:flex;gap:6px;margin-bottom:14px}.nav button{flex:1;background:transparent;color:var(--muted);font-size:14px}.nav button[aria-selected=true]{background:var(--card);color:var(--text);border:1px solid var(--border)}.groupdate{font-size:12px;color:var(--muted);margin-top:16px;font-weight:650}.foot{line-height:1.5;margin:16px 4px;font-size:12px;color:var(--muted)}[hidden]{display:none!important}
+</style>
+</head>
+<body><main>
+<header><div><div class="brand">NicLog<span style="color:var(--accent)">.</span></div><div class="sub">Personal nicotine-use tracker</div></div><span id="date" class="date"></span></header>
+<nav class="nav" aria-label="Sections"><button data-page="today" aria-selected="true">Today</button><button data-page="history" aria-selected="false">History</button><button data-page="settings" aria-selected="false">Settings</button></nav>
+<section id="today">
+<div class="card"><h2>Today's usage</h2><div class="today"><div class="stat"><div class="number" id="sessions">0</div><div class="muted">Sessions</div></div><div class="stat"><div class="number" id="puffs">0</div><div class="muted">Recorded puffs</div></div></div>
+<button id="log" class="primary"><span class="plus" aria-hidden="true">+</span><span id="logLabel">Log vape session</span></button>
+<button id="otherLog" class="secondary">Log individual puff</button>
+<div class="actions"><span class="muted" id="last">No entries yet</span><button id="undo" class="link" disabled>Undo last</button></div><div class="status" id="status" role="status" aria-live="polite"></div></div>
+<div class="card"><div class="section-head"><h2>Last 7 days</h2><span id="weekTotal" class="muted"></span></div><div class="tabs" aria-label="Chart metric"><button data-metric="session" aria-selected="true">Sessions</button><button data-metric="puff" aria-selected="false">Puffs</button></div><div class="chart" id="chart" aria-label="Daily totals"></div></div>
+<div class="card"><h2>Recent entries</h2><div id="recent"></div></div>
+<p class="foot">Session and puff counts are separate. A session does not imply a known number of puffs or a nicotine dose.</p>
+</section>
+<section id="history" hidden><div class="card"><div class="section-head"><h2>Usage history</h2><span class="muted" id="allCount"></span></div><div id="entries"></div></div></section>
+<section id="settings" hidden><div class="card settings"><h2>Quick logging</h2><div class="row"><label for="mode">Main button</label><select id="mode"><option value="session">Vape session</option><option value="puff">Individual puff</option></select></div><p class="muted">Choose whether one tap represents a vaping session or a single puff.</p></div><div class="card settings"><h2>Your data</h2><p class="muted">Records are saved locally in this browser. Export a backup before clearing website data or changing devices.</p><button id="backup" class="secondary">Export backup (JSON)</button><button id="csv" class="secondary">Export spreadsheet (CSV)</button><button id="restore" class="secondary">Import JSON backup</button><input id="file" type="file" accept="application/json,.json" hidden><p id="backupStatus" class="status" role="status"></p></div><div class="card settings"><h2>Offline access</h2><p id="offline" class="muted">Checking offline availability…</p><p class="muted">There is no account, cloud sync, or analytics. The app does not estimate absorbed nicotine.</p></div></section>
+</main>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const key = 'niclog-v1';
+let data = {entries: [], mode: 'session'}, metric = 'session', storageOK = true;
+try { const saved = localStorage.getItem(key); if (saved) data = JSON.parse(saved); } catch { storageOK = false; }
+const dayKey = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+const label = type => type === 'session' ? 'Vape session' : 'Individual puff';
+const dateFmt = new Intl.DateTimeFormat('en-GB',{weekday:'short',day:'numeric',month:'short'});
+const timeFmt = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit'});
+function notify(message, error=false) { $('status').textContent=message; $('status').classList.toggle('error',error); }
+function save(next) {
+  try { localStorage.setItem(key,JSON.stringify(next)); data=next; storageOK=true; return true; }
+  catch { storageOK=false; notify('Unable to save. Your storage may be full or disabled.',true); return false; }
+}
+function log(type) {
+  const entry = {id:globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`,type,time:new Date().toISOString()};
+  if(save({...data,entries:[...data.entries,entry]})){render();notify(`${label(type)} recorded at ${timeFmt.format(new Date(entry.time))}.`);}
+}
+function remove(id) {
+  if(save({...data,entries:data.entries.filter(e=>e.id!==id)})){render();notify('Entry removed.');}
+}
+function entryRow(entry) {
+  const row=document.createElement('div');row.className='row entry';
+  const info=document.createElement('div'), name=document.createElement('strong'), detail=document.createElement('small');
+  name.textContent=label(entry.type);detail.textContent=`${dateFmt.format(new Date(entry.time))} · ${timeFmt.format(new Date(entry.time))}`;
+  info.append(name,detail);const button=document.createElement('button');button.className='remove';button.textContent='×';button.setAttribute('aria-label',`Delete ${label(entry.type)} at ${timeFmt.format(new Date(entry.time))}`);
+  button.onclick=()=>{if(confirm('Delete this entry?'))remove(entry.id);};row.append(info,button);return row;
+}
+function render() {
+  const now=new Date(), today=dayKey(now), sorted=[...data.entries].sort((a,b)=>Date.parse(b.time)-Date.parse(a.time));
+  const todays=sorted.filter(e=>dayKey(new Date(e.time))===today);
+  $('date').textContent=dateFmt.format(now);$('sessions').textContent=todays.filter(e=>e.type==='session').length;$('puffs').textContent=todays.filter(e=>e.type==='puff').length;
+  $('logLabel').textContent=data.mode==='session'?'Log vape session':'Log individual puff';$('otherLog').textContent=data.mode==='session'?'Log individual puff':'Log vape session';$('mode').value=data.mode;
+  $('undo').disabled=!data.entries.length;$('last').textContent=sorted.length?`Last: ${dayKey(new Date(sorted[0].time))===today?'today':dateFmt.format(new Date(sorted[0].time))}, ${timeFmt.format(new Date(sorted[0].time))}`:'No entries yet';
+  const days=Array.from({length:7},(_,i)=>{const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()-6+i);return {d,count:sorted.filter(e=>e.type===metric&&dayKey(new Date(e.time))===dayKey(d)).length};});
+  const max=Math.max(1,...days.map(x=>x.count));$('weekTotal').textContent=`${days.reduce((n,x)=>n+x.count,0)} total`;
+  $('chart').replaceChildren(...days.map(({d,count},i)=>{const col=document.createElement('div');col.className='barcol';col.setAttribute('aria-label',`${dateFmt.format(d)}: ${count}`);const value=document.createElement('div');value.className='barvalue';value.textContent=count;const track=document.createElement('div');track.className='bartrack';const bar=document.createElement('div');bar.className='bar'+(i===6?' current':'');bar.style.height=`${count/max*100}%`;track.append(bar);const day=document.createElement('div');day.className='day';day.textContent=new Intl.DateTimeFormat('en-GB',{weekday:'short'}).format(d);col.append(value,track,day);return col;}));
+  $('recent').replaceChildren(...sorted.slice(0,5).map(entryRow));if(!sorted.length)$('recent').innerHTML='<p class="empty">Your recorded usage will appear here.</p>';
+  $('allCount').textContent=`${sorted.length} entries`;$('entries').replaceChildren();let previous='';for(const entry of sorted){const d=dayKey(new Date(entry.time));if(d!==previous){const heading=document.createElement('div');heading.className='groupdate';heading.textContent=new Intl.DateTimeFormat('en-GB',{dateStyle:'full'}).format(new Date(entry.time));$('entries').append(heading);previous=d;}$('entries').append(entryRow(entry));}if(!sorted.length)$('entries').innerHTML='<p class="empty">No entries recorded.</p>';
+}
+$('log').onclick=()=>log(data.mode);$('otherLog').onclick=()=>log(data.mode==='session'?'puff':'session');$('undo').onclick=()=>{if(data.entries.length)remove(data.entries.at(-1).id);};
+$('mode').onchange=()=>{if(save({...data,mode:$('mode').value})){render();$('backupStatus').textContent='Logging preference saved.';}else{$('mode').value=data.mode;$('backupStatus').textContent='Unable to save preference.';}};
+document.querySelectorAll('[data-page]').forEach(button=>button.onclick=()=>{document.querySelectorAll('[data-page]').forEach(b=>{const active=b===button;b.setAttribute('aria-selected',active);$(b.dataset.page).hidden=!active;});render();});
+document.querySelectorAll('[data-metric]').forEach(button=>button.onclick=()=>{metric=button.dataset.metric;document.querySelectorAll('[data-metric]').forEach(b=>b.setAttribute('aria-selected',b===button));render();});
+function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+$('backup').onclick=()=>download(JSON.stringify({version:1,...data},null,2),'application/json',`niclog-${dayKey(new Date())}.json`);
+$('csv').onclick=()=>download('timestamp_utc,type\n'+data.entries.map(e=>`${e.time},${e.type}`).join('\n'),'text/csv',`niclog-${dayKey(new Date())}.csv`);
+$('restore').onclick=()=>$('file').click();$('file').onchange=async()=>{const file=$('file').files[0];if(!file)return;try{const imported=JSON.parse(await file.text());if(imported.version!==1||!Array.isArray(imported.entries)||!imported.entries.every(e=>e&&typeof e.id==='string'&&['session','puff'].includes(e.type)&&typeof e.time==='string'&&Number.isFinite(Date.parse(e.time))))throw Error('Invalid backup');const merged=new Map(data.entries.map(e=>[e.id,e]));for(const e of imported.entries)if(!merged.has(e.id))merged.set(e.id,{id:e.id,type:e.type,time:new Date(e.time).toISOString()});if(save({...data,entries:[...merged.values()]})){render();$('backupStatus').textContent=`Restored. ${data.entries.length} unique entries.`;}else $('backupStatus').textContent='Could not save imported data.';}catch{$('backupStatus').textContent='Invalid backup. No records changed.';}finally{$('file').value='';}};
+render();if(!storageOK)notify('Local storage is unavailable or could not be read.',true);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});setInterval(render,60000);
+if('serviceWorker' in navigator && ['https:','http:'].includes(location.protocol)){navigator.serviceWorker.register('./sw.js').then(()=>navigator.serviceWorker.ready).then(()=>{$('offline').textContent='Offline access is ready on this installation.';}).catch(()=>{$('offline').textContent='Offline setup failed. Use the hosted HTTPS version.';});}else $('offline').textContent='Install the hosted version for offline access.';
+</script></body></html>
